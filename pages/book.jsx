@@ -1,22 +1,28 @@
 import { useState } from "react";
 import { DateRange } from "react-date-range";
 import { addDays } from "date-fns";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-date-range/dist/styles.css"; // Main CSS file
 import "react-date-range/dist/theme/default.css"; // Default theme CSS
 
 const Booking = () => {
+  // Store the dates as ISO strings to avoid serialization issues
   const [dateRange, setDateRange] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: new Date().toISOString(),
+      endDate: addDays(new Date(), 7).toISOString(),
       key: "selection",
     },
   ]);
 
-  const handleBooking=()=>{
-    alert("Rooms are not available...")
-  }
+  // Handle booking button click
+  const handleBooking = () => {
+    toast.error("Rooms are not available...", {
+      position: "top-center",
+      autoClose: 3000,
+    });
+  };
 
   return (
     <div className="min-h-screen flex bg-sky-50">
@@ -35,10 +41,21 @@ const Booking = () => {
         <div className="bg-white text-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
           <DateRange
             editableDateInputs={true}
-            onChange={(item) => setDateRange([item.selection])}
-            moveRangeOnFirstSelection={false}
-            ranges={dateRange}
-            rangeColors={["#0ea5e9"]}
+            ranges={[{
+              startDate: new Date(dateRange[0].startDate),
+              endDate: new Date(dateRange[0].endDate),
+              key: "selection",
+            }]}
+            onChange={(item) =>
+              setDateRange([
+                {
+                  startDate: item.selection.startDate.toISOString(),
+                  endDate: item.selection.endDate.toISOString(),
+                  key: "selection",
+                },
+              ])
+            }
+            rangeColors={["#0ea5e9"]} // Sky blue color
           />
         </div>
         <button
@@ -48,6 +65,7 @@ const Booking = () => {
           Book Now
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

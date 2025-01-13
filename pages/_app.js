@@ -1,6 +1,6 @@
 // pages/_app.js
 import { useState, useEffect } from "react";
-import Loader from "../components/Loader";
+import Loader from "@/Components/Loader"
 import "../styles/globals.css"; // Ensure Tailwind CSS is imported
 
 function MyApp({ Component, pageProps }) {
