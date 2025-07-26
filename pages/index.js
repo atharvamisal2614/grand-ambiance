@@ -1,11 +1,11 @@
-import Navbar from "@/Components/Navbar";
-import HeroPage from "@/Components/Hero"
+import HeroSection from "@/Components/Hero";
+// import HomePage from "@/Components/Hero";
 
 export default function Home() {
   return (
     <>
-       <Navbar />
-       <HeroPage />
+ 
+    <HeroSection/>
     </>
   
    
